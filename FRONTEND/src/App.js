@@ -6,14 +6,21 @@ import Footer from "./components/Footer";
 const App = () => {
     cont [Phrase, setPhrase] = useState('');
 
+    /* bloque catch para manejar errores que puedan ocurrir durante la petición de red.
+    Esto evita que la aplicación se rompa inesperadamente y permite mostrar un mensaje 
+    o comportamiento alternativo en caso de error. */
     useEffect(() => {
         fetch('/BACKEND/public/api/phrases.json').then(response => response.json()).then(data => {
             const randomPhrase = data.phrase[Math.floor(Math.random() * data.phrases.length)];
             setPhrase(randomPhrase);
+        }).catch(error => {
+            console.error('Error fetching data: ', error);
+            setPhrase('Failed to load phrase');
         });
     }, []);
+
     return (
-        <div className='app'>
+        <div>
             <Header />
             <Phrase phrase={phrase} />
             <Footer />

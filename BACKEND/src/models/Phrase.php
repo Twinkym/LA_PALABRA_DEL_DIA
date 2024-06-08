@@ -1,14 +1,17 @@
 <?php
 
+namespace App\models;
+
+use App\core\Database;
+
 class Phrase {
     private $db;
 
-    public function __construct($db) {
+    public function __construct(Database $db) {
         $this->db = $db;
     }
 
     public function getAll() {
-        $stmt = $this->db->query("SELECT * FROM phrases");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->db->query("SELECT * FROM phrases");   
     }
 }
